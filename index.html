@@ -80,8 +80,8 @@ d3.tsv("10yrstats.tsv", type, function(error, data) {
       .attr("class", "bar")
       .attr("x", function(d) { return x(d.letter); })
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.frequency); })
-      .attr("height", function(d) { return height - y(d.frequency); });
+      .attr("y", function(d) { return y(d.diagnosis); })
+      .attr("height", function(d) { return height - y(d.adults); });
 
 });
 
