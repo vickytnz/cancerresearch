@@ -86,7 +86,7 @@ d3.tsv("10yrstats.tsv", type, function(error, data) {
 });
 
 function type(d) {
-  d.frequency = +d.frequency;
+  d.diagnosis = +d.diagnosis;
   return d;
 }
 
