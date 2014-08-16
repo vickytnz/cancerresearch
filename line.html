@@ -52,7 +52,7 @@ var yAxis = d3.svg.axis()
 
 var line = d3.svg.line()
     .interpolate("basis")
-    .x(function(d) { return x(d.simplified); })
+    .x(function(d) { return x(d.diagnosis); })
     .y(function(d) { return y(d.temperature); });
 
 var svg = d3.select("body").append("svg")
@@ -65,19 +65,19 @@ d3.tsv("10yrstatssimple.tsv", function(error, data) {
   color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
 
   data.forEach(function(d) {
-    d.simplified = parseDate(d.simplified);
+    d.diagnosis = parseDate(d.diagnosis);
   });
 
   var cities = color.domain().map(function(name) {
     return {
       name: name,
       values: data.map(function(d) {
-        return {date: d.simplified, temperature: +d[name]};
+        return {date: d.diagnosis, temperature: +d[name]};
       })
     };
   });
 
-  x.domain(d3.extent(data, function(d) { return d.simplified; }));
+  x.domain(d3.extent(data, function(d) { return d.diagnosis; }));
 
   y.domain([
     d3.min(cities, function(c) { return d3.min(c.values, function(v) { return v.temperature; }); }),
