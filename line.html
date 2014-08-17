@@ -344,6 +344,38 @@ String.prototype.capitalize = function() {
 /*End second set*/
 
 
+/*Bar for comparison*/
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+svg.call(tip);
+
+d3.tsv("10yrstatssimple.tsv", type, function(error, data) {
+  x.domain(data.map(function(d) { return d.diagnosis; }));
+  y.domain([0, d3.max(data, function(d) { return d.adults; })]);
+
+  svg.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.diagnosis); })
+      .attr("width", 30 )
+      .attr("y", function(d) { return y(d.adults); })
+      .attr("height", function(d) { return height - y(d.adults); })
+/*      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide)*/
+
+});
+
+function type(d) {
+  d.adults = +d.adults;
+  return d;
+}
+
+/* End bar for comparison*/
  
     </script>
 </body>
