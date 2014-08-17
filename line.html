@@ -161,9 +161,12 @@
             container: 'body',
             trigger: 'manual',
             html : true,
+            var format = d3.time.format("%Y");
             content: function() { 
-              return "diagnosis: " + d.label + 
-                     "<br/>Rounds: " + d3.format(",")(d.value ? d.value: d.y1 - d.y0); }
+              return "Year: " + format(d.label) + 
+                     "<br/>Survival rate: " + format(d.value); 
+                      
+}
           });
           $(this).popover('show')
         }
