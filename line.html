@@ -84,69 +84,6 @@ String.prototype.capitalize = function() {
         var labelVar = 'diagnosis';
 
 
-/*Bar for comparison*/
-
-d3.tsv("10yrstatssimple.tsv", type, function(error, data) {
-            data.forEach(function(d) {
-                d.diagnosis = parseDate(d.diagnosis);
-            });
-
-
-
-
-/*svg.call(tip);*/
-
-
-  x.domain(data.map(function(d) { return d.diagnosis; }));
-  y.domain([0, d3.max(data, function(d) { return d.adults; })]);
-
-svg.append("g")
-            x.domain(d3.extent(data, function(d) {
-                return d.diagnosis;
-            }));
-            y.domain([0, 100]);
-
-            svg.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
-
-            svg.append("g")
-                .attr("class", "y axis")
-                .call(yAxis)
-                .append("text")
-                .attr("transform", "rotate(-90)")
-                .attr("y", 6)
-                .attr("dy", ".71em")
-                .style("text-anchor", "end")
-                .text("Number of Rounds");
-
-  
-
- svg.selectAll(".bar")
-      .data(data)
-    .enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", function(d) { return x(d.diagnosis); })
-      .attr("width", 3 )
-      .attr("y", function(d) { return y(d.adults); })
-      .attr("height", function(d) { return height - y(d.adults); })
-
-
-
-/*      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide)*/
-
-});
-
-function type(d) {
-  d.adults = +d.adults;
-  return d;
-}
-
-/* End bar for comparison*/
-
-
 /*Start first set*/
         d3.tsv("10yrstatssimple.tsv", function(error, data) {
             data.forEach(function(d) {
@@ -206,6 +143,7 @@ function type(d) {
                 })
                 .style("stroke-width", "4px")
                 .style("fill", "none")
+                .style("opacity", 0.5);
 
             series.selectAll(".firstset.point")
                 .data(function(d) {
@@ -337,6 +275,7 @@ function type(d) {
                 })
                 .style("stroke-width", "4px")
                 .style("fill", "none")
+                .style("opacity", 0.7);
 
             series.selectAll(".secondset.point")
                 .data(function(d) {
