@@ -265,7 +265,7 @@ String.prototype.capitalize = function() {
                 .attr("class", "line")
                 .attr("d", function(d) {
                     return line(d.values);
-                    console.log(d.values);
+                    alert(d.values);
                 })
                 .style("stroke", function(d) {
                     return color(d.name);
