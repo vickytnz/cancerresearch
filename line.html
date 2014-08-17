@@ -348,7 +348,7 @@ String.prototype.capitalize = function() {
 svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-svg.call(tip);
+/*svg.call(tip);*/
 
 d3.tsv("10yrstatssimple.tsv", type, function(error, data) {
   x.domain(data.map(function(d) { return d.diagnosis; }));
