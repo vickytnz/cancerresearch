@@ -31,6 +31,8 @@
       var margin = {top: 20, right: 55, bottom: 30, left: 40},
           width  = 1000 - margin.left - margin.right,
           height = 500  - margin.top  - margin.bottom;
+  
+      var parseDate = d3.time.format("%Y%m%d");
 
       var x = d3.time.scale()
           .range([0, width]);
@@ -42,7 +44,7 @@
           .scale(x)
           .orient("bottom")
           /*.ticks(d3.time.year, 1)
-          .tickFormat(d3.time.format('%Y'));*/
+          .tickFormat(d3.time.format('%Y'))*/;
 
       var yAxis = d3.svg.axis()
           .scale(y)
@@ -77,7 +79,7 @@
           };
         });
 
-var parseDate = d3.time.format("%Y-%m-%d");
+
 seriesData.forEach(function(d) {
     d.diagnosis = parseDate(d.diagnosis);
   });
