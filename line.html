@@ -198,8 +198,8 @@
                     trigger: 'manual',
                     html: true,
                     content: function() {
-                        return "diagnosis: " + d.label +
-                            "<br/>Rounds: " + d3.format(",")(d.value ? d.value : d.y1 - d.y0);
+                        return "Year: " + d.label.getFullYear() +
+                            "<br/>Survival rate: " + d3.value;
                     }
                 });
                 $(this).popover('show')
