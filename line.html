@@ -161,8 +161,9 @@ String.prototype.capitalize = function() {
                 .style("fill", function(d) {
                     return color(d.name);
                 })
-                .style("stroke", "grey")
+                .style("stroke", "white")
                 .style("stroke-width", "2px")
+                .style("opacity", 0.7);
                 .on("mouseover", function(d) {
                     showPopover.call(this, d);
                 })
@@ -291,9 +292,10 @@ String.prototype.capitalize = function() {
                 })
                 .attr("r", "5px")
                 .style("fill", function(d) {
-                    return color(d.name);
+                    return color(d.name)
                 })
-                .style("stroke", "grey")
+                .style("stroke", "white")
+                .style("opacity", 0.7)
                 .style("stroke-width", "2px")
                 .on("mouseover", function(d) {
                     showPopover.call(this, d);
@@ -424,7 +426,7 @@ String.prototype.capitalize = function() {
                 .style("fill", function(d) {
                     return color(d.name);
                 })
-                .style("stroke", "grey")
+                .style("stroke", "white")
                 .style("stroke-width", "2px")
                 .on("mouseover", function(d) {
                     showPopover.call(this, d);
