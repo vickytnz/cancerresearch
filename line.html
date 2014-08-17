@@ -58,7 +58,7 @@
       var color = d3.scale.ordinal()
           .range(["#001c9c","#101b4d","#475003","#9c8305","#d3c47c"]);
  
-     var mysvg = d3.select("body").append("svg")
+     var svg = d3.select("body").append("svg")
           .attr("width",  width  + margin.left + margin.right)
           .attr("height", height + margin.top  + margin.bottom)
         .append("g")
@@ -66,7 +66,7 @@
           .attr("id", "graph1");
 
 
-        mysvg.append("g")
+        svg.append("g")
             .attr("class", "y axis")
             .call(yAxis)
           .append("text")
@@ -76,7 +76,7 @@
             .style("text-anchor", "end")
             .text("Survival");
 
-        mysvg.append("g")
+        svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
@@ -108,7 +108,7 @@
         y.domain([0,100]);
 
 
-        var series = mysvg.selectAll(".year10.series")
+        var series = svg.selectAll(".year10.series")
             .data(seriesData)
           .enter().append("g")
             .attr("class", "series");
@@ -133,7 +133,7 @@
            .on("mouseover", function (d) { showPopover.call(this, d); })
            .on("mouseout",  function (d) { removePopovers(); })
 
-        var legend = mysvg.selectAll(".year10.legend")
+        var legend = svg.selectAll(".year10.legend")
             .data(varNames.slice().reverse())
           .enter().append("g")
             .attr("class", "legend")
@@ -176,6 +176,96 @@
         }
       });
 /*End dataset 1*/
+/*Dataset 2*/
+      d3.tsv("10yrstatssimple.tsv", function (error, data2) {
+        data2.forEach(function(d) {
+    d.diagnosis = parseDate(d.diagnosis);
+        });
+        var labelVar = 'diagnosis';
+        var varNames = d3.keys(data2[0]).filter(function (key) { return key !== labelVar;});
+        color.domain(varNames);
+
+        var seriesData = varNames.map(function (name) {
+          return {
+            name: name,
+            values: data2.map(function (d) {
+              return {name: name, label: d[labelVar], value: +d[name]};
+            })
+          };
+        });
+
+        /*x.domain(d3.extent(data2, function(d) { return d.diagnosis; }));
+        y.domain([0,100]);*/
+
+ 
+        var series = svg.selectAll(".year1.series")
+            .data(seriesData)
+          .enter().append("g")
+            .attr("class", "series");
+
+        series.append("path")
+          .attr("class", "line")
+          .attr("d", function (d) { return line(d.values); })
+          .style("stroke", function (d) { return color(d.name); })
+          .style("stroke-width", "4px")
+          .style("fill", "none")
+
+        series.selectAll(".year1.point")
+          .data(function (d) { return d.values; })
+          .enter().append("circle")
+           .attr("class", "point")
+           .attr("cx", function (d) { return x(d.label); })
+           .attr("cy", function (d) { return y(d.value); })
+           .attr("r", "5px")
+           .style("fill", function (d) { return color(d.name); })
+           .style("stroke", "grey")
+           .style("stroke-width", "2px")
+           .on("mouseover", function (d) { showPopover.call(this, d); })
+           .on("mouseout",  function (d) { removePopovers(); })
+
+        var legend = svg.selectAll(".year1.legend")
+            .data(varNames.slice().reverse())
+          .enter().append("g")
+            .attr("class", "legend")
+            .attr("transform", function (d, i) { return "translate(55," + i * 20 + ")"; });
+
+        legend.append("rect")
+            .attr("x", width - 10)
+            .attr("width", 10)
+            .attr("height", 10)
+            .style("fill", color)
+            .style("stroke", "grey");
+
+        legend.append("text")
+            .attr("x", width - 12)
+            .attr("y", 6)
+            .attr("dy", ".35em")
+            .style("text-anchor", "end")
+            .text(function (d) { return d; });
+
+        function removePopovers () {
+          $('.popover').each(function() {
+            $(this).remove();
+          }); 
+        }
+
+        function showPopover (d) {
+          $(this).popover({
+            title: d.name,
+            placement: 'auto top',
+            container: 'body',
+            trigger: 'manual',
+            html : true,
+
+
+            content: function() { 
+              return "Year " + d.label.getFullYear() + 
+                     "<br/>Rounds: " + d.value ; }
+          });
+          $(this).popover('show')
+        }
+      });
+/*End dataset 2*/
     </script>
   </body>
 </html>
