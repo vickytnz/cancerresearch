@@ -58,12 +58,14 @@
       var color = d3.scale.ordinal()
           .range(["#001c9c","#101b4d","#475003","#9c8305","#d3c47c"]);
 
-      var svg = d3.select("body").append("svg")
+/*Dataset 1*/
+      var svg1 = d3.select("body").append("svg")
           .attr("width",  width  + margin.left + margin.right)
           .attr("height", height + margin.top  + margin.bottom)
         .append("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-/*Dataset 1*/
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+          .attr("id", "graph1");
+
       d3.tsv("1yrstatssimple.tsv", function (error, data1) {
         data1.forEach(function(d) {
     d.diagnosis = parseDate(d.diagnosis);
@@ -88,12 +90,12 @@
         x.domain(d3.extent(data1, function(d) { return d.diagnosis; }));
         y.domain([0,100]);
 
-        svg.append("g")
+        svg1.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
 
-        svg.append("g")
+        svg1.append("g")
             .attr("class", "y axis")
             .call(yAxis)
           .append("text")
@@ -103,7 +105,7 @@
             .style("text-anchor", "end")
             .text("Number of Rounds");
 
-        var series = svg.selectAll(".series")
+        var series = svg1.selectAll(".series")
             .data(seriesData)
           .enter().append("g")
             .attr("class", "series");
@@ -128,7 +130,7 @@
            .on("mouseover", function (d) { showPopover.call(this, d); })
            .on("mouseout",  function (d) { removePopovers(); })
 
-        var legend = svg.selectAll(".legend")
+        var legend = svg1.selectAll(".legend")
             .data(varNames.slice().reverse())
           .enter().append("g")
             .attr("class", "legend")
@@ -177,7 +179,12 @@
     d.diagnosis = parseDate(d.diagnosis);
         });
 
-
+      var svg2 = d3.select("body").append("svg")
+          .attr("width",  width  + margin.left + margin.right)
+          .attr("height", height + margin.top  + margin.bottom)
+        .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+          .attr("id", "graph2");
 
 
         var labelVar = 'diagnosis';
@@ -196,12 +203,12 @@
         x.domain(d3.extent(data2, function(d) { return d.diagnosis; }));
         y.domain([0,100]);
 
-        svg.append("g")
+        svg2.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
 
-        svg.append("g")
+        svg2.append("g")
             .attr("class", "y axis")
             .call(yAxis)
           .append("text")
@@ -211,7 +218,7 @@
             .style("text-anchor", "end")
             .text("Number of Rounds");
 
-        var series = svg.selectAll(".series")
+        var series = svg2.selectAll(".series")
             .data(seriesData)
           .enter().append("g")
             .attr("class", "series");
@@ -236,7 +243,7 @@
            .on("mouseover", function (d) { showPopover.call(this, d); })
            .on("mouseout",  function (d) { removePopovers(); })
 
-        var legend = svg.selectAll(".legend")
+        var legend = svg2.selectAll(".legend")
             .data(varNames.slice().reverse())
           .enter().append("g")
             .attr("class", "legend")
