@@ -64,7 +64,7 @@
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 /*Dataset 1*/
-      d3.tsv("10yrstatssimple.tsv", function (error, data1) {
+      d3.tsv("1yrstatssimple.tsv", function (error, data1) {
         data1.forEach(function(d) {
     d.diagnosis = parseDate(d.diagnosis);
         });
@@ -172,7 +172,7 @@
       });
 /*End dataset 1*/
 /*Dataset 2*/
-      d3.tsv("1yrstatssimple.tsv", function (error, data2) {
+      d3.tsv("10yrstatssimple.tsv", function (error, data2) {
         data2.forEach(function(d) {
     d.diagnosis = parseDate(d.diagnosis);
         });
