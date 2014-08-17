@@ -346,11 +346,34 @@ String.prototype.capitalize = function() {
 
 /*Bar for comparison*/
 svg.append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            x.domain(d3.extent(data, function(d) {
+                return d.diagnosis;
+            }));
+            y.domain([0, 100]);
 
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Number of Rounds");
+
+ 
 /*svg.call(tip);*/
 
 d3.tsv("10yrstatssimple.tsv", type, function(error, data) {
+            data.forEach(function(d) {
+                d.diagnosis = parseDate(d.diagnosis);
+            });
+
   x.domain(data.map(function(d) { return d.diagnosis; }));
   y.domain([0, d3.max(data, function(d) { return d.adults; })]);
 
@@ -362,6 +385,9 @@ d3.tsv("10yrstatssimple.tsv", type, function(error, data) {
       .attr("width", 30 )
       .attr("y", function(d) { return y(d.adults); })
       .attr("height", function(d) { return height - y(d.adults); })
+
+
+
 /*      .on('mouseover', tip.show)
       .on('mouseout', tip.hide)*/
 
