@@ -1,5 +1,18 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
 <style>
 
 body {
@@ -113,6 +126,27 @@ d3.tsv("10yrstatssimple.tsv", function(error, data) {
       .attr("dy", ".35em")
       .text(function(d) { return d.name; });
 });
+
+function removePopovers () {
+  $('.popover').each(function() {
+    $(this).remove();
+  }); 
+}
+
+function showPopover (d) {
+  $(this).popover({
+    title: d.name,
+    placement: 'auto top',
+    container: 'body',
+    trigger: 'manual',
+    html : true,
+    content: function() { 
+      return "Quarter: " + d.label + 
+             "<br/>Rounds: " + 
+             d3.format(",")(d.value ? d.value: d.y1 - d.y0); }
+  });
+  $(this).popover('show')
+}
 
 </script>
 </html>
