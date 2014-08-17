@@ -34,17 +34,10 @@
 
       var parseDate = d3.time.format("%Y").parse;
 
-
-      d3.tsv("10yrstatssimple.tsv", function (error, data) {
-        data.forEach(function(d) {
-    d.diagnosis = parseDate(d.diagnosis);
-        });
-
-
       var x = d3.time.scale()
         .range([0, width])
-        .domain(d3.extent(data, function(d) { return +d.year; }));
 
+ 
       var y = d3.scale.linear()
           .rangeRound([height, 0]);
 
@@ -70,6 +63,12 @@
           .attr("height", height + margin.top  + margin.bottom)
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      d3.tsv("10yrstatssimple.tsv", function (error, data) {
+        data.forEach(function(d) {
+    d.diagnosis = parseDate(d.diagnosis);
+        });
+      x.domain(d3.extent(data, function(d) { return +d.diagnosis; }));
 
 
 
