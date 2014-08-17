@@ -194,8 +194,8 @@
           };
         });
 
-        /* x.domain([1970, 2015]);
-        y.domain([0,100]); */
+        x.domain(d3.extent(data2, function(d) { return d.diagnosis; }));
+        y.domain([0,100]);
 
  
         var series1 = svg.selectAll(".series1.series")
