@@ -138,10 +138,10 @@ String.prototype.capitalize = function() {
             var series = svg.selectAll(".firstset.series")
                 .data(seriesData)
                 .enter().append("g")
-                .attr("class", "firstset series", function(d) { return d.name}  )
+                .attr("class", "firstset series", d.name )
 
             series.append("path")
-                .attr("class", "line")
+                .attr("class", "line", d.name)
                 .attr("d", function(d) {
                     return line(d.values);
                 })
@@ -157,7 +157,7 @@ String.prototype.capitalize = function() {
                     return d.values;
                 })
                 .enter().append("circle")
-                .attr("class", "firstset point")
+                .attr("class", "firstset point", d.name)
                 .attr("cx", function(d) {
                     return x(d.label);
                 })
@@ -181,7 +181,7 @@ String.prototype.capitalize = function() {
             var legend = svg.selectAll(".firstset.legend")
                 .data(varNames.slice().reverse())
                 .enter().append("g")
-                .attr("class", "firstset legend")
+                .attr("class", "firstset legend", d.name)
                 .attr("transform", function(d, i) {
                     return "translate(55," + i * 20 + ")";
                 });
