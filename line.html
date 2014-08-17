@@ -129,7 +129,7 @@
            .on("mouseout",  function (d) { removePopovers(); })
 
         var legend = svg.selectAll(".legend")
-            .data1(varNames.slice().reverse())
+            .data(varNames.slice().reverse())
           .enter().append("g")
             .attr("class", "legend")
             .attr("transform", function (d, i) { return "translate(55," + i * 20 + ")"; });
@@ -237,7 +237,7 @@
            .on("mouseout",  function (d) { removePopovers(); })
 
         var legend = svg.selectAll(".legend")
-            .data2(varNames.slice().reverse())
+            .data(varNames.slice().reverse())
           .enter().append("g")
             .attr("class", "legend")
             .attr("transform", function (d, i) { return "translate(55," + i * 20 + ")"; });
