@@ -63,6 +63,7 @@
           .attr("height", height + margin.top  + margin.bottom)
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+          .attr("id", "graph1");
 
 
         svg.append("g")
@@ -107,19 +108,19 @@
         y.domain([0,100]);
 
 
-        var series = svg.selectAll(".year10.series")
+        var series10 = svg.selectAll(".series10.series")
             .data(seriesData)
           .enter().append("g")
-            .attr("class", "series");
+            .attr("class", "series10 series");
 
-        series.append("path")
+        series10.append("path")
           .attr("class", "line")
           .attr("d", function (d) { return line(d.values); })
           .style("stroke", function (d) { return color(d.name); })
           .style("stroke-width", "4px")
           .style("fill", "none")
 
-        series.selectAll(".year10.point")
+        series10.selectAll(".series10.point")
           .data(function (d) { return d.values; })
           .enter().append("circle")
            .attr("class", "point")
@@ -197,19 +198,19 @@
         y.domain([0,100]);*/
 
  
-        var series = svg.selectAll(".year1.series")
+        var series1 = svg.selectAll(".series1.series")
             .data(seriesData)
           .enter().append("g")
-            .attr("class", "series");
+            .attr("class", "series1 series");
 
-        series.append("path")
+        series1.append("path")
           .attr("class", "line")
           .attr("d", function (d) { return line(d.values); })
           .style("stroke", function (d) { return color(d.name); })
           .style("stroke-width", "4px")
           .style("fill", "none")
 
-        series.selectAll(".year1.point")
+        series1.selectAll(".year1.point")
           .data(function (d) { return d.values; })
           .enter().append("circle")
            .attr("class", "point")
