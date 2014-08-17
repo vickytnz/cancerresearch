@@ -43,8 +43,8 @@ var y = d3.scale.linear()
       var xAxis = d3.svg.axis()
           .scale(x)
           .orient("bottom")
-          /*.ticks(d3.time.year, 1)
-          .tickFormat(d3.time.format('%Y'))*/;
+          .ticks(d3.time.year, 1)
+          .tickFormat(d3.time.format('%Y'));
 
       var yAxis = d3.svg.axis()
           .scale(y)
