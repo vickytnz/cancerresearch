@@ -104,7 +104,7 @@
             .text("Number of Rounds");
 
         var series = svg.selectAll(".series")
-            .data1(seriesData)
+            .data(seriesData)
           .enter().append("g")
             .attr("class", "series");
 
@@ -212,7 +212,7 @@
             .text("Number of Rounds");
 
         var series = svg.selectAll(".series")
-            .data2(seriesData)
+            .data(seriesData)
           .enter().append("g")
             .attr("class", "series");
 
