@@ -56,10 +56,6 @@
       var color = d3.scale.ordinal()
           .range(["#001c9c","#101b4d","#475003","#9c8305","#d3c47c"]);
 
-      data.forEach(function(d) {
-    d.diagnosis = parseDate(d.diagnosis);
-  });
-
       var svg = d3.select("body").append("svg")
           .attr("width",  width  + margin.left + margin.right)
           .attr("height", height + margin.top  + margin.bottom)
@@ -80,6 +76,10 @@
             })
           };
         });
+
+data.forEach(function(d) {
+    d.diagnosis = parseDate(d.diagnosis);
+  });
 
         x.domain(data.map(function (d) { return d.diagnosis; }));
         y.domain([0,100]); /*Survival is always 0-100*/
