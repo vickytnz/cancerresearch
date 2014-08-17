@@ -345,6 +345,19 @@ String.prototype.capitalize = function() {
 
 
 /*Bar for comparison*/
+
+/*svg.call(tip);*/
+
+d3.tsv("10yrstatssimple.tsv", type, function(error, data) {
+            data.forEach(function(d) {
+                d.diagnosis = parseDate(d.diagnosis);
+            });
+
+
+
+  x.domain(data.map(function(d) { return d.diagnosis; }));
+  y.domain([0, d3.max(data, function(d) { return d.adults; })]);
+
 svg.append("g")
             x.domain(d3.extent(data, function(d) {
                 return d.diagnosis;
@@ -366,18 +379,9 @@ svg.append("g")
                 .style("text-anchor", "end")
                 .text("Number of Rounds");
 
- 
-/*svg.call(tip);*/
+  
 
-d3.tsv("10yrstatssimple.tsv", type, function(error, data) {
-            data.forEach(function(d) {
-                d.diagnosis = parseDate(d.diagnosis);
-            });
-
-  x.domain(data.map(function(d) { return d.diagnosis; }));
-  y.domain([0, d3.max(data, function(d) { return d.adults; })]);
-
-  svg.selectAll(".bar")
+ svg.selectAll(".bar")
       .data(data)
     .enter().append("rect")
       .attr("class", "bar")
