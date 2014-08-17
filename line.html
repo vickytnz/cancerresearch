@@ -32,8 +32,10 @@
           width  = 1000 - margin.left - margin.right,
           height = 500  - margin.top  - margin.bottom;
 
-      var x = d3.scale.ordinal()
-          .rangeRoundBands([0, width], .1);
+      var parseDate = d3.time.format("%Y").parse;
+
+      var x = d3.time.scale()
+        .range([0, width]);
 
       var y = d3.scale.linear()
           .rangeRound([height, 0]);
@@ -41,6 +43,7 @@
       var xAxis = d3.svg.axis()
           .scale(x)
           .orient("bottom");
+          
 
       var yAxis = d3.svg.axis()
           .scale(y)
@@ -48,7 +51,7 @@
 
       var line = d3.svg.line()
           .interpolate("cardinal")
-          .x(function (d) { return x(d.label) + x.rangeBand() / 2; })
+          .x(function (d) { return x(d.label); })
           .y(function (d) { return y(d.value); });
 
       var color = d3.scale.ordinal()
@@ -61,7 +64,9 @@
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       d3.tsv("10yrstatssimple.tsv", function (error, data) {
-
+        data.forEach(function(d) {
+    d.diagnosis = parseDate(d.diagnosis);
+        });
         var labelVar = 'diagnosis';
         var varNames = d3.keys(data[0]).filter(function (key) { return key !== labelVar;});
         color.domain(varNames);
