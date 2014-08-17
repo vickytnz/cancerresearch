@@ -79,8 +79,7 @@ var y = d3.scale.linear()
           };
         });
 
-
-seriesData.forEach(function(d) {
+data.forEach(function(d) {
     d.diagnosis = parseDate(d.diagnosis);
   }); 
 
