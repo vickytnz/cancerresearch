@@ -19,6 +19,7 @@
             stroke-width: 2px;
             shape-rendering: crispEdges;
         }
+        .bar { background: #666; colour: #666;}
     </style>
 </head>
 
@@ -386,7 +387,7 @@ svg.append("g")
     .enter().append("rect")
       .attr("class", "bar")
       .attr("x", function(d) { return x(d.diagnosis); })
-      .attr("width", 30 )
+      .attr("width", 3 )
       .attr("y", function(d) { return y(d.adults); })
       .attr("height", function(d) { return height - y(d.adults); })
 
