@@ -73,7 +73,7 @@ String.prototype.capitalize = function() {
             });
 
         var color = d3.scale.ordinal()
-            .range(["#001c9c", "#101b4d", "#475003", "#9c8305", "#d3c47c"]);
+            .range(["#FF69B4", "#0000FF", "#475003", "#9c8305", "#d3c47c"]);
 
         var svg = d3.select("body").append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -82,6 +82,64 @@ String.prototype.capitalize = function() {
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         var labelVar = 'diagnosis';
+
+d3.tsv("10yrstatssimple.tsv", type, function(error, data) {
+            data.forEach(function(d) {
+                d.diagnosis = parseDate(d.diagnosis);
+            });
+
+
+
+  x.domain(data.map(function(d) { return d.diagnosis; }));
+  y.domain([0, d3.max(data, function(d) { return d.adults; })]);
+
+svg.append("g")
+            x.domain(d3.extent(data, function(d) {
+                return d.diagnosis;
+            }));
+            y.domain([0, 100]);
+
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Number of Rounds");
+
+  
+
+ svg.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.diagnosis); })
+      .attr("width", 3 )
+      .attr("y", function(d) { return y(d.adults); })
+      .attr("height", function(d) { return height - y(d.adults); })
+
+
+
+/*      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide)*/
+
+});
+
+function type(d) {
+  d.adults = +d.adults;
+  return d;
+}
+
+/* End bar for comparison*/
+
+
 /*Start first set*/
         d3.tsv("10yrstatssimple.tsv", function(error, data) {
             data.forEach(function(d) {
@@ -214,7 +272,7 @@ String.prototype.capitalize = function() {
 /*End first set*/
           
 /*Start second set*/
-        d3.tsv("1yrstatssimple.tsv", function(error, data) {
+        d3.tsv("5yrstatssimple.tsv", function(error, data) {
             data.forEach(function(d) {
                 d.diagnosis = parseDate(d.diagnosis);
             });
@@ -344,22 +402,30 @@ String.prototype.capitalize = function() {
         });
 /*End second set*/
 
-
-/*Bar for comparison*/
-
-/*svg.call(tip);*/
-
-d3.tsv("10yrstatssimple.tsv", type, function(error, data) {
+/*Start third set*/
+        d3.tsv("1yrstatssimple.tsv", function(error, data) {
             data.forEach(function(d) {
                 d.diagnosis = parseDate(d.diagnosis);
             });
 
+            var varNames = d3.keys(data[0]).filter(function(key) {
+                return key !== labelVar;
+            });
+            color.domain(varNames);
 
+            var seriesData = varNames.map(function(name) {
+                return {
+                    name: name,
+                    values: data.map(function(d) {
+                        return {
+                            name: name,
+                            label: d[labelVar],
+                            value: +d[name]
+                        };
+                    })
+                };
+            });
 
-  x.domain(data.map(function(d) { return d.diagnosis; }));
-  y.domain([0, d3.max(data, function(d) { return d.adults; })]);
-
-svg.append("g")
             x.domain(d3.extent(data, function(d) {
                 return d.diagnosis;
             }));
@@ -380,30 +446,99 @@ svg.append("g")
                 .style("text-anchor", "end")
                 .text("Number of Rounds");
 
-  
+            var series = svg.selectAll(".thirdset.series")
+                .data(seriesData)
+                .enter().append("g")
+                .attr("class", "thirdset series");
 
- svg.selectAll(".bar")
-      .data(data)
-    .enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", function(d) { return x(d.diagnosis); })
-      .attr("width", 3 )
-      .attr("y", function(d) { return y(d.adults); })
-      .attr("height", function(d) { return height - y(d.adults); })
+            series.append("path")
+                .attr("class", "line")
+                .attr("d", function(d) {
+                    return line(d.values);
+                })
+                .style("stroke", function(d) {
+                    return color(d.name);
+                })
+                .style("stroke-width", "4px")
+                .style("fill", "none")
+
+            series.selectAll(".thirdset.point")
+                .data(function(d) {
+                    return d.values;
+                })
+                .enter().append("circle")
+                .attr("class", "thirdset point")
+                .attr("cx", function(d) {
+                    return x(d.label);
+                })
+                .attr("cy", function(d) {
+                    return y(d.value);
+                })
+                .attr("r", "5px")
+                .style("fill", function(d) {
+                    return color(d.name);
+                })
+                .style("stroke", "grey")
+                .style("stroke-width", "2px")
+                .on("mouseover", function(d) {
+                    showPopover.call(this, d);
+                })
+                .on("mouseout", function(d) {
+                    removePopovers();
+                })
+
+            var legend = svg.selectAll(".thirdset.legend")
+                .data(varNames.slice().reverse())
+                .enter().append("g")
+                .attr("class", "thirdset legend")
+                .attr("transform", function(d, i) {
+                    return "translate(55," + i * 20 + ")";
+                });
+           legend.append("rect")
+                .attr("x", width - 10)
+                .attr("width", 10)
+                .attr("height", 10)
+                .style("fill", color)
+                .style("stroke", "grey");
+
+            legend.append("text")
+                .attr("x", width - 12)
+                .attr("y", 6)
+                .attr("dy", ".35em")
+                .style("text-anchor", "end")
+                .text(function(d) {
+                    return d;
+                });
+
+            function removePopovers() {
+                $('.popover').each(function() {
+                    $(this).remove();
+                });
+            }
+
+            function showPopover(d) {
+                $(this).popover({
+                    title: d.name.capitalize() + ": 1 yr surivival rate",
+                    placement: 'auto top',
+                    container: 'body',
+                    trigger: 'manual',
+                    html: true,
+                    content: function() {
+                        return "Year: " + d.label.getFullYear() +
+                            "<br/>Survival rate: " + d.value  ;
+                    }
+                });
+                $(this).popover('show')
+            }
+        });
+/*End third set*/
 
 
+/*Bar for comparison*/
 
-/*      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide)*/
+/*svg.call(tip);*/
 
-});
 
-function type(d) {
-  d.adults = +d.adults;
-  return d;
-}
-
-/* End bar for comparison*/
  
     </script>
 </body>
