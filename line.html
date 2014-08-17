@@ -161,12 +161,11 @@
             container: 'body',
             trigger: 'manual',
             html : true,
-            var format = d3.time.format("%Y");
+
+
             content: function() { 
-              return "Year: " + format(d.label) + 
-                     "<br/>Survival rate: " + format(d.value); 
-                      
-}
+              return "Year " + d.label.getFullYear() + 
+                     "<br/>Rounds: " + d3.format(",")(d.value ? d.value: d.y1 - d.y0); }
           });
           $(this).popover('show')
         }
