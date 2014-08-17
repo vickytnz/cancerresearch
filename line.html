@@ -34,8 +34,8 @@
 
       var parseDate = d3.time.format("%Y%m%d").parse;
 
-      var x = d3.scale.ordinal()
-          .rangeRoundBands([0, width], .1);
+      var x = d3.time.scale.
+          .rangeRoundBands([0, width], 0);
 
       var y = d3.scale.linear()
           .rangeRound([height, 0]);
