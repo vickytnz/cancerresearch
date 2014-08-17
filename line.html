@@ -30,6 +30,10 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="http://d3js.org/d3.v3.js"></script>
     <script>
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
         var margin = {
                 top: 20,
                 right: 55,
@@ -192,14 +196,14 @@
 
             function showPopover(d) {
                 $(this).popover({
-                    title: d.name,
+                    title: d.name.capitalize(),
                     placement: 'auto top',
                     container: 'body',
                     trigger: 'manual',
                     html: true,
                     content: function() {
                         return "Year: " + d.label.getFullYear() +
-                            "<br/>Survival rate: " + d3.value;
+                            "<br/>Survival rate: " + d.value + "%";
                     }
                 });
                 $(this).popover('show')
@@ -323,14 +327,14 @@
 
             function showPopover(d) {
                 $(this).popover({
-                    title: d.name,
+                    title: d.name.capitalize(),
                     placement: 'auto top',
                     container: 'body',
                     trigger: 'manual',
                     html: true,
                     content: function() {
-                        return "diagnosis: " + d.label +
-                            "<br/>Rounds: " + d3.format(",")(d.value ? d.value : d.y1 - d.y0);
+                        return "Year: " + d.label.getFullYear() +
+                            "<br/>Survival rate: " + d.value + "%";
                     }
                 });
                 $(this).popover('show')
