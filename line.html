@@ -138,10 +138,7 @@ String.prototype.capitalize = function() {
             var series = svg.selectAll(".firstset.series")
                 .data(seriesData)
                 .enter().append("g")
-                .attr("class", "firstset series")
-                .attr("class", function(d) { 
-return d.label;
-})
+                .attr("class", "firstset series" )
 
             series.append("path")
                 .attr("class", "line")
