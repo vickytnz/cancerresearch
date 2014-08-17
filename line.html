@@ -32,6 +32,8 @@
           width  = 1000 - margin.left - margin.right,
           height = 500  - margin.top  - margin.bottom;
 
+      var parseDate = d3.time.format("%Y%m%d").parse;
+
       var x = d3.scale.ordinal()
           .rangeRoundBands([0, width], .1);
 
@@ -53,6 +55,10 @@
 
       var color = d3.scale.ordinal()
           .range(["#001c9c","#101b4d","#475003","#9c8305","#d3c47c"]);
+
+      data.forEach(function(d) {
+    d.diagnosis = parseDate(d.diagnosis);
+  });
 
       var svg = d3.select("body").append("svg")
           .attr("width",  width  + margin.left + margin.right)
@@ -76,14 +82,7 @@
         });
 
         x.domain(data.map(function (d) { return d.diagnosis; }));
-        y.domain([
-          d3.min(seriesData, function (c) { 
-            return d3.min(c.values, function (d) { return d.value; });
-          }),
-          d3.max(seriesData, function (c) { 
-            return d3.max(c.values, function (d) { return d.value; });
-          })
-        ]);
+        y.domain([0,100]); /*Survival is always 0-100*/
 
         svg.append("g")
             .attr("class", "x axis")
