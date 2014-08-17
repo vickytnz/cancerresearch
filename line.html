@@ -108,7 +108,7 @@
         y.domain([0,100]);
 
 
-        var series10 = svg.select(".series10.series")
+        var series10 = svg.selectAll(".series10.series")
             .data(seriesData)
           .enter().append("g")
             .attr("class", "series10 series");
@@ -120,7 +120,7 @@
           .style("stroke-width", "4px")
           .style("fill", "none")
 
-        series10.select(".series10.point")
+        series10.selectAll(".series10.point")
           .data(function (d) { return d.values; })
           .enter().append("circle")
            .attr("class", "point")
@@ -133,7 +133,7 @@
            .on("mouseover", function (d) { showPopover.call(this, d); })
            .on("mouseout",  function (d) { removePopovers(); })
 
-        var legend = svg.select(".year10.legend")
+        var legend = svg.selectAll(".year10.legend")
             .data(varNames.slice().reverse())
           .enter().append("g")
             .attr("class", "legend")
@@ -198,7 +198,7 @@
         y.domain([0,100]);
 
  
-        var series1 = svg.select(".series1.series")
+        var series1 = svg.selectAll(".series1.series")
             .data(seriesData)
           .enter().append("g")
             .attr("class", "series1 series");
@@ -210,7 +210,7 @@
           .style("stroke-width", "4px")
           .style("fill", "none")
 
-        series1.select(".year1.point")
+        series1.selectAll(".year1.point")
           .data(function (d) { return d.values; })
           .enter().append("circle")
            .attr("class", "point")
@@ -223,7 +223,7 @@
            .on("mouseover", function (d) { showPopover.call(this, d); })
            .on("mouseout",  function (d) { removePopovers(); })
 
-        var legend = svg.select(".year1.legend")
+        var legend = svg.selectAll(".year1.legend")
             .data(varNames.slice().reverse())
           .enter().append("g")
             .attr("class", "legend")
@@ -269,3 +269,4 @@
     </script>
   </body>
 </html>
+Work
