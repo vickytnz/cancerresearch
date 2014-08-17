@@ -116,7 +116,7 @@
           .style("fill", "none")
 
         series.selectAll(".point")
-          .data1(function (d) { return d.values; })
+          .data(function (d) { return d.values; })
           .enter().append("circle")
            .attr("class", "point")
            .attr("cx", function (d) { return x(d.label); })
@@ -224,7 +224,7 @@
           .style("fill", "none")
 
         series.selectAll(".point")
-          .data2(function (d) { return d.values; })
+          .data(function (d) { return d.values; })
           .enter().append("circle")
            .attr("class", "point")
            .attr("cx", function (d) { return x(d.label); })
