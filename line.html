@@ -74,6 +74,7 @@ String.prototype.capitalize = function() {
 
         var color = d3.scale.ordinal()
             .range(["#0000FF", "#FF69B4", "#475003", "#9c8305", "#d3c47c"]);
+
         var svg = d3.select("body").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -82,11 +83,18 @@ String.prototype.capitalize = function() {
 
         var labelVar = 'diagnosis';
 
+
+/*Bar for comparison*/
+
 d3.tsv("10yrstatssimple.tsv", type, function(error, data) {
             data.forEach(function(d) {
                 d.diagnosis = parseDate(d.diagnosis);
             });
 
+
+
+
+/*svg.call(tip);*/
 
 
   x.domain(data.map(function(d) { return d.diagnosis; }));
@@ -533,9 +541,6 @@ function type(d) {
 /*End third set*/
 
 
-/*Bar for comparison*/
-
-/*svg.call(tip);*/
 
 
  
