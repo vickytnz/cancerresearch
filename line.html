@@ -80,9 +80,9 @@
         });
 
 
-seriesData.forEach(function(d) {
+/* seriesData.forEach(function(d) {
     d.diagnosis = parseDate(d.diagnosis);
-  });
+  }); */
 
         x.domain(data.map(function (d) { return d.diagnosis; }));
         y.domain([0,100]); /*Survival is always 0-100*/
