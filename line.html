@@ -23,7 +23,8 @@
 </head>
 
 <body>
-    <h2 style="padding-left:60px;">Total Funding Rounds in CrunchBase by diagnosis</h2>
+    <h2 style="padding-left:60px;">Cancer isn't a death sentence anymore</h2>
+<p>While back in the 1970s a cancer diagnosis had a low rate of survival, now the future is a bit more optimistic.</p>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
@@ -334,7 +335,7 @@ String.prototype.capitalize = function() {
                     html: true,
                     content: function() {
                         return "Year: " + d.label.getFullYear() +
-                            "<br/>Survival rate: " + d.value + "%";
+                            "<br/>Survival rate: " + d.value  ;
                     }
                 });
                 $(this).popover('show')
