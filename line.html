@@ -35,8 +35,8 @@
       var parseDate = d3.time.format("%Y").parse;
 
       var x = d3.time.scale()
-        .range([0, width]);
-        .domain(d3.extent(dataset, function(d) { return +d.year; }));
+        .range([0, width])
+        .domain(d3.extent(dataset, function(d) { return +d.diagnosis; }));
 
       var y = d3.scale.linear()
           .rangeRound([height, 0]);
