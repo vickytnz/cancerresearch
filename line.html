@@ -76,13 +76,7 @@
         });
 
         x.domain(data.map(function (d) { return d.diagnosis; }));
-        y.domain([
-          d3.min(seriesData, function (c) { 
-            return d3.min(c.values, function (d) { return d.value; });
-          }),
-          d3.max(seriesData, function (c) { 
-            return d3.max(c.values, function (d) { return d.value; });
-          })
+        y.domain([0,100]})
         ]);
 
         svg.append("g")
