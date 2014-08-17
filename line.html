@@ -64,8 +64,8 @@
         .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 /*Dataset 1*/
-      d3.tsv("10yrstatssimple.tsv", function (error, data) {
-        data.forEach(function(d) {
+      d3.tsv("10yrstatssimple.tsv", function (error, data1) {
+        data1.forEach(function(d) {
     d.diagnosis = parseDate(d.diagnosis);
         });
 
@@ -73,19 +73,19 @@
 
 
         var labelVar = 'diagnosis';
-        var varNames = d3.keys(data[0]).filter(function (key) { return key !== labelVar;});
+        var varNames = d3.keys(data1[0]).filter(function (key) { return key !== labelVar;});
         color.domain(varNames);
 
         var seriesData = varNames.map(function (name) {
           return {
             name: name,
-            values: data.map(function (d) {
+            values: data1.map(function (d) {
               return {name: name, label: d[labelVar], value: +d[name]};
             })
           };
         });
 
-        x.domain(d3.extent(data, function(d) { return d.diagnosis; }));
+        x.domain(d3.extent(data1, function(d) { return d.diagnosis; }));
         y.domain([0,100]);
 
         svg.append("g")
@@ -104,7 +104,7 @@
             .text("Number of Rounds");
 
         var series = svg.selectAll(".series")
-            .data(seriesData)
+            .data1(seriesData)
           .enter().append("g")
             .attr("class", "series");
 
@@ -116,7 +116,7 @@
           .style("fill", "none")
 
         series.selectAll(".point")
-          .data(function (d) { return d.values; })
+          .data1(function (d) { return d.values; })
           .enter().append("circle")
            .attr("class", "point")
            .attr("cx", function (d) { return x(d.label); })
@@ -129,7 +129,7 @@
            .on("mouseout",  function (d) { removePopovers(); })
 
         var legend = svg.selectAll(".legend")
-            .data(varNames.slice().reverse())
+            .data1(varNames.slice().reverse())
           .enter().append("g")
             .attr("class", "legend")
             .attr("transform", function (d, i) { return "translate(55," + i * 20 + ")"; });
@@ -172,8 +172,8 @@
       });
 /*End dataset 1*/
 /*Dataset 2*/
-      d3.tsv("1yrstatssimple.tsv", function (error, data) {
-        data.forEach(function(d) {
+      d3.tsv("1yrstatssimple.tsv", function (error, data2) {
+        data2.forEach(function(d) {
     d.diagnosis = parseDate(d.diagnosis);
         });
 
@@ -181,19 +181,19 @@
 
 
         var labelVar = 'diagnosis';
-        var varNames = d3.keys(data[0]).filter(function (key) { return key !== labelVar;});
+        var varNames = d3.keys(data2[0]).filter(function (key) { return key !== labelVar;});
         color.domain(varNames);
 
         var seriesData = varNames.map(function (name) {
           return {
             name: name,
-            values: data.map(function (d) {
+            values: data2.map(function (d) {
               return {name: name, label: d[labelVar], value: +d[name]};
             })
           };
         });
 
-        x.domain(d3.extent(data, function(d) { return d.diagnosis; }));
+        x.domain(d3.extent(data2, function(d) { return d.diagnosis; }));
         y.domain([0,100]);
 
         svg.append("g")
@@ -212,7 +212,7 @@
             .text("Number of Rounds");
 
         var series = svg.selectAll(".series")
-            .data(seriesData)
+            .data2(seriesData)
           .enter().append("g")
             .attr("class", "series");
 
@@ -224,7 +224,7 @@
           .style("fill", "none")
 
         series.selectAll(".point")
-          .data(function (d) { return d.values; })
+          .data2(function (d) { return d.values; })
           .enter().append("circle")
            .attr("class", "point")
            .attr("cx", function (d) { return x(d.label); })
@@ -237,7 +237,7 @@
            .on("mouseout",  function (d) { removePopovers(); })
 
         var legend = svg.selectAll(".legend")
-            .data(varNames.slice().reverse())
+            .data2(varNames.slice().reverse())
           .enter().append("g")
             .attr("class", "legend")
             .attr("transform", function (d, i) { return "translate(55," + i * 20 + ")"; });
