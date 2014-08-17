@@ -43,8 +43,7 @@
       var xAxis = d3.svg.axis()
           .scale(x)
           .orient("bottom")
-          .ticks(d3.time.years(1970, 2015[5]))
-          .tickFormat(d3.time.format("%Y"));
+          .tickValues(1970, 1975,  1980, 1985, 1990, 1995, 2000, 2005, 2010, 2015);
 
       var yAxis = d3.svg.axis()
           .scale(y)
